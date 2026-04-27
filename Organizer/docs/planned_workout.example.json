@@ -1,0 +1,47 @@
+{
+  "workout": {
+    "id": "wk-001",
+    "name": "Leg Day",
+    "notes": "Focus on form and depth during squats",
+    "items": [
+      {
+        "id": "ag-001",
+        "type": "agenda",
+        "label": "Warmup",
+        "durationSeconds": 600,
+        "items": [
+          {
+            "id": "ex-001",
+            "type": "exercise",
+            "exerciseId": "ex-101",
+            "parameters": { "reps": { "value": 10 } }
+          }
+        ]
+      },
+      {
+        "id": "grp-001",
+        "type": "group",
+        "label": "Superset",
+        "repetitions": { "value": 3 },
+        "items": [
+          {
+            "id": "ex-002",
+            "type": "exercise",
+            "exerciseId": "ex-201",
+            "parameters": {
+              "reps": { "min": 6, "max": 8 },
+              "percent1RM": { "value": 80 },
+              "notes": "Keep chest up"
+            }
+          },
+          {
+            "id": "ex-003",
+            "type": "exercise",
+            "exerciseId": "ex-202",
+            "parameters": { "reps": { "value": 12 } }
+          }
+        ]
+      }
+    ]
+  }
+}
