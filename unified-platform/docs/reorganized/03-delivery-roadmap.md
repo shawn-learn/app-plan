@@ -5,17 +5,26 @@
 - Implement contract generation and round-trip tests
 - Deliver `core-domain-contracts`, `core-units`, `core-schemas-ts`
 
+## Phase 0.5 — Quality and Safety Gates
+- Add per-package CI build/test matrix before broad feature work
+- Add dependency-direction + dependency-matrix checks
+- Add public API diff checks and contract-compatibility checks
+- Enable baseline security/dependency scanning in CI
+
 ## Phase 1 — Identity and Tenant Context
 - Deliver auth, tenancy, users, access, teams
 - Boot app shells with authentication stubs
+- Add baseline telemetry (structured logs, trace/correlation IDs, error-code taxonomy)
 
 ## Phase 2 — Runtime Core
 - Deliver rules engine, plugin contracts, template storage, run pipeline, signatures/audit, data access, API runtime
 - Validate end-to-end stub wizard run and canonical record creation
+- Validate outbox/idempotency seams for cross-package runtime events
 
 ## Phase 3 — Frontend Runtime
 - Deliver web API client, auth session, UI kit, wizard runtime, plugin UI, form editors
 - Validate browser-based wizard execution
+- Validate plugin contract version negotiation and incompatible-plugin UX
 
 ## Phase 4 — Horizontal Capabilities
 - Deliver scheduling, calendar, goals, content, sync, shared feature shells
@@ -36,3 +45,4 @@
 - Per-app smoke tests for login + wizard run
 - Isolation tests to prevent undeclared domain linking
 - Dependency-direction linting
+- Tenant-boundary negative tests for shared platform services

@@ -68,3 +68,16 @@ Define the unified architecture that merges Organizer and Process Wizard into on
 - Signatures and audit are core capabilities, opt-in by app/domain.
 - Fitness-specific models are plugin-owned, not platform-owned.
 - Cross-language contracts originate from JSON Schema and generate TS types.
+
+## Architectural Guardrails
+
+- **Domain leakage controls**:
+  - enforce package-level dependency policy in CI (`allowed_imports` style matrix)
+  - block domain-specific vocabulary in platform public API surfaces
+  - require public API diff checks for platform package releases
+- **`core-data-access` boundary**:
+  - includes only session/engine/repository primitives and shared migration helpers
+  - excludes package/domain query logic
+- **Compatibility discipline**:
+  - plugin manifests must declare supported contract version ranges
+  - runtime must fail fast on incompatible plugin contract versions with actionable diagnostics
