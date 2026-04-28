@@ -79,7 +79,7 @@ ProcessWizard is a SaaS compliance system enabling organizations to author proce
 11. Autosave MUST preserve step progress locally, including during offline use.
 12. Offline runs MUST remain local until upload completes; unsynced runs SHALL be hidden from other users.
 13. Upon connectivity restoration, the client SHALL sync pending runs, invoking server-side verification and signature flows.
-14. Executors SHALL apply a digital signature once per run; system MUST prevent duplicate signatures unless revoked by an admin.
+14. Executors SHALL apply a digital signature once per run in alignment with the completion/signature API policies defined in Section 5.4.
 15. Executors SHALL access a history of their own runs and runs shared with them.
 16. Localization framework MUST at minimum load English content and be extensible for additional locales.
 
@@ -114,7 +114,7 @@ To guarantee consistency between authoring and execution experiences, the platfo
    - Authors MAY enforce whole-number or half-step increments and SHALL define interpretation guidance for compliance review.
 9. **Signature Capture**
    - Enables typed name, drawn signature, or certificate-backed signature capture, binding the executor identity, timestamp, and device metadata to the canonical record.
-   - Signature fields SHALL trigger server-side validation to prevent duplicate signatures per run unless prior signatures are revoked by an administrator.
+   - Signature field validation and revocation behavior SHALL follow the completion/signature requirements in Section 5.4.
 
 All field types MUST support localization of labels/help text, audit logging of value changes (including offline edits queued for sync), and client-side validation feedback consistent with UI standards.
 
