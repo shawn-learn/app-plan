@@ -277,3 +277,94 @@ Your architecture is already strong and directionally correct. If you add:
 - and compliance-grade audit/signature operational design,
 
 you will have a robust, scalable platform that can genuinely support all three products without domain entanglement.
+
+---
+
+## Evaluation of the Proposed Feature/Layer Draft (Calendar, Workflow, Forms, Groups)
+
+This section evaluates the newly proposed structure against `plan.md`.
+
+## Alignment With the Existing Plan
+
+The draft aligns well with several core decisions already captured in `plan.md`:
+
+1. **Calendar/Schedule as a first-class platform capability** matches `core-scheduling`, `core-calendar`, and `web-calendar`.
+2. **Workflow + Forms + Document approvals** maps directly to `core-templates`, `core-run-pipeline`, `web-wizard-runtime`, and `core-signatures-audit`.
+3. **Groups with role/permission controls** matches `core-access` and `core-teams`.
+4. **JSON-centric user/application preferences** aligns with `core-users` and contract-first schemas in `core-domain-contracts`.
+5. **SQLite for development and Timescale/Postgres for production time-series workloads** is directionally consistent with the unified stack assumptions.
+
+## Gaps / Ambiguities to Resolve Before Implementation
+
+The draft contains strong intent, but several elements need clarification so implementation is safe and consistent:
+
+1. **Layer numbering collides (multiple “Layer 1” concerns).**
+   - Current draft labels Data, Frontend orchestration, Users, Workflow, Approvals, and Schedule all as Layer 1.
+   - Recommendation: map to the existing three-layer architecture in `plan.md`:
+     - Platform core (backend services/contracts),
+     - Domain plugins (fitness/organizer/industrial),
+     - App shells (UI composition + integrations).
+
+2. **Data-cross-reference rule is currently too restrictive/unclear.**
+   - Statement: only user/group structures are expected to cross-reference, while other tables may not.
+   - Risk: schedule entries, forms, approvals, and logs necessarily require relational links (`appointment -> form template -> questions -> approval record -> actor`).
+   - Recommendation: allow controlled foreign keys and reference IDs through contract-governed schemas, rather than forbidding cross references globally.
+
+3. **Ownership and admin semantics need canonical policy definitions.**
+   - “Must contain one and only one owner” is good, but must define transfer and fail-safe behavior.
+   - Add explicit rules for:
+     - owner transfer,
+     - preventing orphaned groups,
+     - last-admin constraints,
+     - system-admin override policy,
+     - immutable audit trail for role changes.
+
+4. **Approvals/signatures need compliance-grade detail.**
+   - “Digital signatures” is insufficient for implementation.
+   - Must define:
+     - signature canonicalization format/version,
+     - key management and rotation,
+     - signer identity binding,
+     - verification API behavior,
+     - tamper-evident audit chaining.
+
+5. **Schedule data model should separate planned vs logged entities cleanly.**
+   - Draft already hints at this distinction (excellent).
+   - Recommendation:
+     - Planned activities: recurrence + template references + assignment metadata.
+     - Logged activities: immutable event/log records + typed measurement rows + schema version markers.
+
+6. **“Source Control” inside forms/documents needs a concrete interpretation.**
+   - Clarify whether this means:
+     - template version history, approvals, and diffing, or
+     - true Git-style branching/merging.
+   - For v1, prefer controlled template versioning via `core-templates` + promotion workflow.
+
+7. **Calendar interface integrations should be explicit plugin adapters.**
+   - Google/Office calendar connectivity should be implemented as integration adapters at app/domain edge, not platform-core hard dependencies.
+
+8. **Messaging encryption requirement is high-stakes and domain-specific.**
+   - “Encrypted for medical industry” implies compliance obligations.
+   - Keep `core-messaging` minimal in early phases; define interface seams first, then add regulated messaging controls behind explicit compliance requirements.
+
+## Recommended Mapping of Your Draft to the Unified Package Plan
+
+- **Groups / roles / permissions** → `core-access`, `core-teams`
+- **Users / preferences / auth** → `core-users`, `core-auth`, `web-auth-session`
+- **Workflow / forms / docs** → `core-templates`, `core-run-pipeline`, `web-wizard-runtime`, `web-form-editors`
+- **Approvals / signatures / audit** → `core-signatures-audit`
+- **Schedule / calendar** → `core-scheduling`, `core-calendar`, `web-calendar`
+- **Fitness utilities + workout manager** → `domain-fitness` (not platform core)
+- **LLM + MCP integration** → app/domain integration seam; avoid placing model-provider coupling in core packages initially
+
+## Suggested Priority Sequence for This Draft
+
+1. Finalize canonical entities and ID conventions (users, groups, templates, runs, schedule items, logs).
+2. Lock permission and ownership rules (including last-admin and owner transfer invariants).
+3. Define planned vs logged schedule schemas and recurrence behavior.
+4. Define approval/signature trust model and verification flow.
+5. Add external integration contracts (Google/Office calendars, maps, LLM providers) as adapters.
+
+## Bottom Line
+
+Your draft is strongly aligned with the strategic architecture and can fit cleanly into the existing plan with moderate refinement. The most important next step is turning the current conceptual bullets into explicit contracts/invariants so package boundaries remain clean and implementation risk stays low.
