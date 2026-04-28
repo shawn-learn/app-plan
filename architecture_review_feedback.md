@@ -1,3 +1,5 @@
+DELETE
+
 # Architecture Review Feedback for `plan.md`
 
 This review focuses on strategic architecture risk reduction and practical implementation guidance for a unified workout/coaching/organizer/industrial platform.
