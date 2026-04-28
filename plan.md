@@ -9,9 +9,6 @@ This repository has moved from monolithic planning into milestone-driven executi
 
 ## Active Milestones
 
-1. [01-metabolic-core](milestones/01-metabolic-core.md)
-2. [02-data-integration](milestones/02-data-integration.md)
-3. [03-client-management](milestones/03-client-management.md)
 
 ## Architecture Direction (Cross-Cutting)
 
