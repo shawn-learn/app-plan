@@ -1,3 +1,5 @@
+DELETE
+
 # Unified Platform — Library Merge Plan
 
 > Draft plan. Open questions at the bottom — please review the **Open Questions** section before approving.

@@ -1,3 +1,5 @@
+DELETE
+
 # Organizer — Library Decomposition Overview
 
 This document describes the Organizer product as it exists today and proposes a decomposition of the current monolithic codebase into **15 independently-buildable libraries**. Each library has its own requirements document linked at the bottom of this file.
