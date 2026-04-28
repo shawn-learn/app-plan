@@ -6,14 +6,16 @@ Relates to: [03-client-management]
 # Milestone 03: Client Management
 
 ## Objective
-Deliver trainer-facing and client management capabilities centered on Organizer workflows.
+Deliver coach-facing client management capabilities while extracting reusable approval/access controls into platform core.
 
 ## Scope
-- Client roster, goals, and scheduling surfaces.
-- Team/trainer relationship flows.
-- Template-driven workout planning and execution tracking.
+- Coach app: client roster, goals, and scheduling surfaces.
+- Coach app: team/trainer relationship flows.
+- Coach app: template-driven workout planning and execution tracking.
+- Platform/base architecture: shared change-approval workflow contracts and policy checks.
 
 ## Deliverables
-- Organizer-facing domain boundaries and service contracts.
-- UI modules for client lifecycle and workout assignment.
-- Data model updates for coach-client permissions.
+- `app-coach` domain boundaries and service contracts for client lifecycle.
+- Coach UI modules for client lifecycle and workout assignment.
+- Platform-level data model and service contracts for coach-client permissions and approval gating.
+- Explicit non-goals list for `app-organizer` to avoid cross-app scope creep in this milestone.
