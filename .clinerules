@@ -1,0 +1,7 @@
+# Persistent Agent Rules (CLI Agents)
+
+1. Follow schema-first development: define/modify contracts before implementation code.
+2. Maintain strict package boundaries between platform core and domain plugins.
+3. For Dataverse integration, implement adapter seams in integration modules; avoid hardcoding endpoints.
+4. Require typed interfaces, explicit error envelopes, and input validation on all service boundaries.
+5. Keep migration notes in milestone documents when data contracts change.

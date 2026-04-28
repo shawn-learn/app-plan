@@ -1,3 +1,8 @@
+---
+Status: Draft
+Last Updated: 2026-04-28
+Relates to: [Program Plan]
+---
 DELETE
 
 # Architecture Review Feedback for `plan.md`

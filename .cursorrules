@@ -1,0 +1,7 @@
+# Persistent Agent Rules (IDE Agents)
+
+- Use FastAPI + SQLAlchemy + Pydantic patterns already documented in this repository.
+- Keep React/TypeScript components strongly typed and form logic based on React Hook Form.
+- Use Recharts wrappers from shared UI packages where available.
+- Preserve auditability for metabolic computations with formula versioning metadata.
+- For Dataverse connectivity, route through MCP-compatible specs in `specs/`.
