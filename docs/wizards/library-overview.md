@@ -131,6 +131,43 @@ App shell
 
 ---
 
+
+### Hierarchical Dependency Map (Backend + Frontend)
+
+```text
+Tier 0 — Foundational contracts/data (leaf dependencies)
+├─ pw-domain-contracts
+└─ @process-wizard/exercise-catalog
+
+Tier 1 — Core engines and standalone utilities
+├─ pw-rules-engine
+├─ pw-plugin-contracts -> pw-domain-contracts
+├─ pw-fit-parser
+├─ pw-training-metrics
+└─ @process-wizard/form-editors
+
+Tier 2 — Feature-building libraries
+├─ pw-data-access -> pw-domain-contracts
+└─ @process-wizard/workout-editor -> @process-wizard/exercise-catalog
+
+Tier 3 — Runtime orchestration
+├─ pw-run-pipeline -> pw-domain-contracts + pw-data-access + pw-rules-engine + pw-plugin-contracts
+└─ @process-wizard/workout-runtime -> @process-wizard/workout-editor + @process-wizard/exercise-catalog
+
+Tier 4 — Transport + client boundary
+├─ pw-api-runtime -> Tier 0-3 backend libraries
+└─ @process-wizard/web-api-client
+
+Tier 5 — Web app integration layer
+├─ @process-wizard/web-auth-session -> @process-wizard/web-api-client
+├─ @process-wizard/web-wizard-runtime -> @process-wizard/web-api-client
+└─ @process-wizard/web-plugin-ui
+
+Application composition
+├─ Backend app -> pw-api-runtime + pw-run-pipeline (+ direct modules while extraction is in progress)
+└─ Frontend app -> web-* packages + workout-* packages + form-editors
+```
+
 ## Phased Delivery
 
 ### Phase A — Foundations + FIT ingestion
