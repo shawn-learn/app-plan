@@ -167,6 +167,11 @@ _Optional automation (post-MVP): introduce a pre-merge bot that detects non-fast
 13. Reference attachments SHALL follow a validated schema at publish-time and display within execution sidebar.
 14. Notification delivery MUST exhibit <30s p95 latency with exponential backoff retries.
 15. All review, approval, publish, and notification events SHALL generate audit entries.
+16. The system SHALL seed and maintain a default template and default stylesheet for every supported target document type (`intake_form`, `clinical_assessment`, `workout_log`, `training_plan`, `verification_report`).
+17. Authors MAY edit templates and stylesheets assigned to a target document type, including changing non-default entries and creating tenant-specific variants.
+18. The system MUST prevent deletion or deactivation of the last available stylesheet for any target document type.
+19. The system MUST enforce exactly one default stylesheet per target document type at any time; when an active default is removed, another active stylesheet for that type SHALL be promoted atomically in the same transaction.
+20. Publish and preview operations SHALL fail validation with a clear error when a target document type has no resolvable default template or default stylesheet.
 
 ### 5.6 Version History & Diffs
 1. Users SHALL view chronological version history including author, reviewer, approver, and change messages.
@@ -231,6 +236,8 @@ _Optional automation (post-MVP): introduce a pre-merge bot that detects non-fast
 - `users`: `id`, `name`, `email`, `hashed_password`, `is_admin`, `is_client`, `status`, `user_image`, `organization_id`.
 - `user_public_keys`: `(user_id, version)`, `public_key`, `created_at`.
 - `user_unit_preferences`: `user_id`, `measurement`, `unit`, optional `exercise_id` or `tag`, uniqueness per scope.
+- `document_templates`: `id`, `tenant_id`, `target_type`, `name`, `version`, `is_default`, `is_system_seed`, `status (active|archived)`, `content_json`, `created_by`, `created_at`, `updated_at`.
+- `stylesheets`: `id`, `tenant_id`, `target_type`, `name`, `version`, `is_default`, `is_system_seed`, `status (active|archived)`, `css_text`, `created_by`, `created_at`, `updated_at`.
 
 ## 8. API Surface Summary
 - Completion & signature: `POST /runs/{id}/complete`, `POST /runs/{id}/sign`, `GET /runs/{id}`, `GET /verify/{record_hash}`, `POST /runs/{id}/revoke`, `GET /runs/{id}/proof.json`, `GET /runs/{id}/proof.pdf`.
@@ -240,6 +247,7 @@ _Optional automation (post-MVP): introduce a pre-merge bot that detects non-fast
 - User management: `/users` router endpoints for profile management, preferences, security operations. HOLD (Full route mapping pending).
 - Authentication & session management: `POST /auth/login`, `POST /auth/mfa/verify`, `POST /auth/mfa/enroll`, `POST /auth/mfa/activate`, `POST /auth/refresh`, `POST /auth/logout`, `POST /auth/password/reset-request`, `POST /auth/password/reset-confirm`.
 - Tenant onboarding API for SaaS operators: `POST /ops/tenants` (idempotent provisioning with 201/202 semantics), `GET /ops/tenants/{tenant_id}` (status), and `POST /tenants/users` (tenant admin user invitations post-onboarding).
+- Template and stylesheet management (per target type): `GET /document-templates`, `POST /document-templates`, `PATCH /document-templates/{id}`, `POST /document-templates/{id}/set-default`, `GET /stylesheets`, `POST /stylesheets`, `PATCH /stylesheets/{id}`, `POST /stylesheets/{id}/set-default`, `DELETE /stylesheets/{id}` (guarded by minimum-one-stylesheet rule).
 
 ## 9. Integration & SDK Requirements
 1. Internal API gateway SHALL front user-management and procedure services for shared authentication.

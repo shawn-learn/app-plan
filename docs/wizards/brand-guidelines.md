@@ -145,6 +145,15 @@ Generous whitespace communicates control and professionalism. Avoid visual clutt
 - Footer: Page number + “Process Wizard | © Precise Ventures”.
 - Fonts: Inter Regular (body), Poppins SemiBold (titles).
 
+**Default Template Pack by Document Type**
+- Intake Form: `intake-default` template + `intake-default-light` stylesheet.
+- Clinical Assessment: `assessment-default` template + `assessment-default-light` stylesheet.
+- Workout Log: `workout-log-default` template + `workout-log-default-light` stylesheet.
+- Training Plan: `training-plan-default` template + `training-plan-default-light` stylesheet.
+- Verification Report (PDF proof): `verification-report-default` template + `verification-report-default-light` stylesheet.
+
+Each default template in this pack SHALL include the required header/footer and typography conventions above so generated output remains brand-compliant even before tenant customization.
+
 **Slide Decks**
 - Background: white or slate grey.
 - Title slides: Process Blue banner across top 15%.
